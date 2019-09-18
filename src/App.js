@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+class App extends Component {
+  constructor() {
+      super();
+      this.state ={
+        pictures: [],
+      };
+  }
+componentDidMount() {
+  fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
+  .then(results => {
+      return results.json();
+  }).then(data => {
+    let pictures = data.results.map((pic) => {
+      return(
+        <div key={pic.results}>
+          <img src={pic.url} />
+          </div>
+    )
+  })
+})
+}
+
+
+  render() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {this.state.pictures}
     </div>
   );
+  }
 }
 
 export default App;
