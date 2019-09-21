@@ -6,7 +6,10 @@ class App extends Component {
       super();
       this.state ={
         url:'',
-        title: ''
+        title: '',
+        data:'',
+        copyright:'',
+        date:''
       };
   }
 componentDidMount() {
@@ -15,7 +18,10 @@ componentDidMount() {
       return results.json();
   }).then(data => this.setState({
     url: data.url,
-    title: data.title
+    title: data.title,
+    data: data.explanation,
+    copyright: data.copyright,
+    date: data.date
   }));
   }
 
@@ -24,7 +30,10 @@ componentDidMount() {
   return (
     <div className="App">
       <h1>{this.state.title}</h1>
-      <img src={this.state.url} />
+      <p><strong>By:</strong> {this.state.copyright}</p>
+      <p><strong>Date:</strong> {this.state.date}</p>
+      <img className='resize' src={this.state.url} />
+      <p>{this.state.data}</p>
     </div>
   );
   }
